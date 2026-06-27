@@ -3,7 +3,7 @@
     <el-aside :width="isCollapse ? '64px' : '220px'" class="aside">
       <div class="logo">
         <el-icon size="24"><Monitor /></el-icon>
-        <span v-show="!isCollapse">RSMS 管理后台</span>
+        <span v-show="!isCollapse">个人Rsms 管理后台</span>
       </div>
       <el-menu
         :default-active="route.path"
@@ -52,6 +52,10 @@
         <el-menu-item index="/workorders">
           <el-icon><Tickets /></el-icon>
           <template #title>工单管理</template>
+        </el-menu-item>
+        <el-menu-item index="/activities">
+          <el-icon><ChatDotRound /></el-icon>
+          <template #title>销售活动</template>
         </el-menu-item>
         <el-menu-item index="/config">
           <el-icon><Setting /></el-icon>

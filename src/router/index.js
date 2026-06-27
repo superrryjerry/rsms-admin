@@ -26,6 +26,7 @@ const routes = [
       { path: 'approvals', component: () => import('../views/ApprovalManage.vue'), meta: { title: '审批管理' } },
       { path: 'contracts', component: () => import('../views/ContractManage.vue'), meta: { title: '合同管理' } },
       { path: 'workorders', component: () => import('../views/WorkOrderManage.vue'), meta: { title: '工单管理' } },
+      { path: 'activities', component: () => import('../views/ActivityManage.vue'), meta: { title: '销售活动' } },
       { path: 'config', component: () => import('../views/SysConfig.vue'), meta: { title: '系统配置' } },
       { path: 'import', component: () => import('../views/DataImport.vue'), meta: { title: '数据导入' } }
     ]

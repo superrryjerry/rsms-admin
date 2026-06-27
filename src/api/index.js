@@ -126,5 +126,11 @@ export const adminApi = {
   importPool: (formData) => http.post('/admin/import/pool', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
   importVehicles: (formData) => http.post('/admin/import/vehicles', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
   importContracts: (formData) => http.post('/admin/import/contracts', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
-  importWorkOrders: (formData) => http.post('/admin/import/workorders', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+  importWorkOrders: (formData) => http.post('/admin/import/workorders', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
+  importCustomers: (formData) => http.post('/admin/import/customers', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
+  // Templates
+  getTemplates: () => http.get('/admin/templates'),
+  downloadTemplate: (type) => `/api/admin/templates/template/${type}`,
+  // Activities (admin view all)
+  getActivities: (params) => http.get('/admin/activities/list', { params })
 }
