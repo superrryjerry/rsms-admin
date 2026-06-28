@@ -7,6 +7,7 @@
           <div>
             <el-input v-model="keyword" placeholder="搜索VIN/车牌/总部合同编号" clearable style="width: 260px; margin-right: 12px" @keyup.enter="loadData" />
             <el-button type="primary" @click="loadData">搜索</el-button>
+            <el-button type="success" @click="exportData">导出</el-button>
           </div>
         </div>
       </template>
@@ -67,6 +68,11 @@ const loadData = async () => {
     list.value = res.data.list
     total.value = res.data.total
   } finally { loading.value = false }
+}
+
+const exportData = () => {
+  const token = localStorage.getItem('token')
+  window.open(`/api/contracts/export?token=${token}`, '_blank')
 }
 
 onMounted(() => { loadData() })

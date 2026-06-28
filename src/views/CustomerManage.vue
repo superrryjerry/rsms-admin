@@ -7,6 +7,7 @@
           <div>
             <el-input v-model="keyword" placeholder="搜索客户名称" clearable style="width: 220px; margin-right: 12px" @keyup.enter="loadData" />
             <el-button type="primary" @click="loadData">搜索</el-button>
+            <el-button type="success" @click="exportData">导出</el-button>
           </div>
         </div>
       </template>
@@ -104,6 +105,11 @@ const viewDetail = async (row) => {
   const res = await customerApi.detail(row.customer_name)
   detailData.value = res.data
   detailDialog.value = true
+}
+
+const exportData = () => {
+  const token = localStorage.getItem('token')
+  window.open(`/api/customers/export?token=${token}`, '_blank')
 }
 
 onMounted(() => { loadData() })

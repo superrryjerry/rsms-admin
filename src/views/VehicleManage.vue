@@ -7,6 +7,7 @@
           <div>
             <el-input v-model="keyword" placeholder="搜索VIN/车牌/客户/车型/经销商" clearable style="width: 280px; margin-right: 12px" @keyup.enter="loadData" />
             <el-button type="primary" @click="loadData">搜索</el-button>
+            <el-button type="success" @click="exportData">导出</el-button>
           </div>
         </div>
       </template>
@@ -123,6 +124,11 @@ const viewDetail = async (row) => {
   const res = await vehicleApi.detail(row.vin)
   detailData.value = res.data
   detailDialog.value = true
+}
+
+const exportData = () => {
+  const token = localStorage.getItem('token')
+  window.open(`/api/vehicles/export?token=${token}`, '_blank')
 }
 
 onMounted(() => { loadData() })

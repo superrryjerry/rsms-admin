@@ -7,6 +7,7 @@
           <div>
             <el-input v-model="keyword" placeholder="搜索VIN/车牌/客户/车型" clearable style="width: 260px; margin-right: 12px" @keyup.enter="loadData" />
             <el-button type="primary" @click="loadData">搜索</el-button>
+            <el-button type="success" @click="exportData">导出</el-button>
           </div>
         </div>
       </template>
@@ -106,6 +107,11 @@ const doClaim = async () => {
     claimDialog.value = false
     loadData()
   } finally { claimLoading.value = false }
+}
+
+const exportData = () => {
+  const token = localStorage.getItem('token')
+  window.open(`/api/pool/export?token=${token}`, '_blank')
 }
 
 onMounted(() => { loadData(); loadDealers() })
