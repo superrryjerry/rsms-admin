@@ -3,8 +3,8 @@
     <div class="login-card">
       <div class="login-header">
         <el-icon size="40" color="#409EFF"><Monitor /></el-icon>
-        <h2>RSMS 经销商CRM</h2>
-        <p>管理后台</p>
+        <h2>个人Rsms信息记录平台</h2>
+        <p>欢迎使用</p>
       </div>
       <el-form ref="formRef" :model="form" :rules="rules" @submit.prevent="handleLogin">
         <el-form-item prop="phone">
