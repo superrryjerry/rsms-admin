@@ -4,7 +4,7 @@
       <template #header>
         <div class="card-header">
           <span>用户管理</span>
-          <el-button type="primary" @click="showDialog = true">新增用户</el-button>
+          <el-button type="primary" @click="openCreateDialog">新增用户</el-button>
         </div>
       </template>
       <el-table :data="users" stripe v-loading="loading">
@@ -25,18 +25,21 @@
           </template>
         </el-table-column>
         <el-table-column prop="created_at" label="创建时间" />
-        <el-table-column label="操作" width="200" fixed="right">
+        <el-table-column label="操作" width="280" fixed="right">
           <template #default="{ row }">
+            <el-button size="small" @click="openEditDialog(row)">编辑</el-button>
             <el-button size="small" @click="handleReset(row)">重置密码</el-button>
-            <el-button size="small" :type="row.status === 1 ? 'danger' : 'success'" @click="handleToggle(row)">
+            <el-button size="small" :type="row.status === 1 ? 'warning' : 'success'" @click="handleToggle(row)">
               {{ row.status === 1 ? '禁用' : '启用' }}
             </el-button>
+            <el-button size="small" type="danger" @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
 
-    <el-dialog v-model="showDialog" title="新增用户" width="460px">
+    <!-- 新增/编辑用户对话框 -->
+    <el-dialog v-model="showDialog" :title="isEdit ? '编辑用户' : '新增用户'" width="460px">
       <el-form :model="form" label-width="100px">
         <el-form-item label="手机号" required>
           <el-input v-model="form.phone" placeholder="登录手机号" />
@@ -44,16 +47,22 @@
         <el-form-item label="姓名" required>
           <el-input v-model="form.name" placeholder="用户姓名" />
         </el-form-item>
-        <el-form-item label="密码" required>
+        <el-form-item v-if="!isEdit" label="密码" required>
           <el-input v-model="form.password" type="password" placeholder="初始密码" show-password />
         </el-form-item>
         <el-form-item label="经销商代码">
           <el-input v-model="form.dealer_code" placeholder="关联经销商" />
         </el-form-item>
+        <el-form-item label="角色">
+          <el-select v-model="form.role" style="width: 100%">
+            <el-option label="经销商员工" value="dealer" />
+            <el-option label="管理员" value="admin" />
+          </el-select>
+        </el-form-item>
       </el-form>
       <template #footer>
         <el-button @click="showDialog = false">取消</el-button>
-        <el-button type="primary" @click="handleCreate" :loading="creating">创建</el-button>
+        <el-button type="primary" @click="handleSubmit" :loading="submitting">{{ isEdit ? '保存' : '创建' }}</el-button>
       </template>
     </el-dialog>
   </div>
@@ -67,8 +76,10 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 const users = ref([])
 const loading = ref(false)
 const showDialog = ref(false)
-const creating = ref(false)
-const form = reactive({ phone: '', name: '', password: '', dealer_code: '' })
+const submitting = ref(false)
+const isEdit = ref(false)
+const editId = ref(null)
+const form = reactive({ phone: '', name: '', password: '', dealer_code: '', role: 'dealer' })
 
 const loadData = async () => {
   loading.value = true
@@ -78,16 +89,53 @@ const loadData = async () => {
   } finally { loading.value = false }
 }
 
-const handleCreate = async () => {
-  if (!form.phone || !form.name || !form.password) return ElMessage.warning('请填写必填项')
-  creating.value = true
+const openCreateDialog = () => {
+  isEdit.value = false
+  editId.value = null
+  Object.assign(form, { phone: '', name: '', password: '', dealer_code: '', role: 'dealer' })
+  showDialog.value = true
+}
+
+const openEditDialog = (row) => {
+  isEdit.value = true
+  editId.value = row.id
+  Object.assign(form, {
+    phone: row.phone,
+    name: row.name,
+    password: '',
+    dealer_code: row.dealer_code || '',
+    role: row.role
+  })
+  showDialog.value = true
+}
+
+const handleSubmit = async () => {
+  if (!form.phone || !form.name) return ElMessage.warning('请填写必填项')
+  if (!isEdit.value && !form.password) return ElMessage.warning('请填写密码')
+  if (!isEdit.value && form.password.length < 8) return ElMessage.warning('密码至少8位')
+  
+  submitting.value = true
   try {
-    await adminApi.createUser(form)
-    ElMessage.success('创建成功')
+    if (isEdit.value) {
+      await adminApi.updateUser(editId.value, {
+        phone: form.phone,
+        name: form.name,
+        dealer_code: form.dealer_code || null,
+        role: form.role
+      })
+      ElMessage.success('更新成功')
+    } else {
+      await adminApi.createUser({
+        phone: form.phone,
+        name: form.name,
+        password: form.password,
+        dealer_code: form.dealer_code || null
+      })
+      ElMessage.success('创建成功')
+    }
     showDialog.value = false
-    Object.assign(form, { phone: '', name: '', password: '', dealer_code: '' })
     loadData()
-  } finally { creating.value = false }
+  } finally { submitting.value = false }
 }
 
 const handleReset = async (row) => {
@@ -119,6 +167,23 @@ const handleToggle = async (row) => {
   await adminApi.toggleUser(row.id)
   ElMessage.success('状态已更新')
   loadData()
+}
+
+const handleDelete = async (row) => {
+  try {
+    await ElMessageBox.confirm(`确定要删除用户 "${row.name}" 吗？`, '确认删除', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    })
+    await adminApi.deleteUser(row.id)
+    ElMessage.success('删除成功')
+    loadData()
+  } catch (e) {
+    if (e !== 'cancel') {
+      // 错误已在api拦截器中处理
+    }
+  }
 }
 
 onMounted(loadData)

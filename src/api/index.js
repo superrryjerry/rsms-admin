@@ -114,6 +114,8 @@ export const adminApi = {
   // Users
   getUsers: () => http.get('/admin/users'),
   createUser: (data) => http.post('/admin/users', data),
+  updateUser: (id, data) => http.put(`/admin/users/${id}`, data),
+  deleteUser: (id) => http.delete(`/admin/users/${id}`),
   resetPassword: (id, data) => http.post(`/admin/users/${id}/reset`, data),
   toggleUser: (id) => http.post(`/admin/users/${id}/toggle`),
   // Config
@@ -122,6 +124,8 @@ export const adminApi = {
   // Dealers
   getDealers: () => http.get('/admin/dealers'),
   createDealer: (data) => http.post('/admin/dealers', data),
+  updateDealer: (code, data) => http.put(`/admin/dealers/${code}`, data),
+  deleteDealer: (code) => http.delete(`/admin/dealers/${code}`),
   // Import
   importPool: (formData) => http.post('/admin/import/pool', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
   importVehicles: (formData) => http.post('/admin/import/vehicles', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
