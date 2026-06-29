@@ -9,7 +9,7 @@
       </template>
       <el-table :data="users" stripe v-loading="loading">
         <el-table-column prop="id" label="ID" width="60" />
-        <el-table-column prop="phone" label="手机号" width="140" />
+        <el-table-column prop="phone" label="账号" width="140" />
         <el-table-column prop="name" label="姓名" width="120" />
         <el-table-column prop="dealer_code" label="经销商代码" width="120" />
         <el-table-column prop="role" label="角色" width="100">
@@ -41,8 +41,8 @@
     <!-- 新增/编辑用户对话框 -->
     <el-dialog v-model="showDialog" :title="isEdit ? '编辑用户' : '新增用户'" width="460px">
       <el-form :model="form" label-width="100px">
-        <el-form-item label="手机号" required>
-          <el-input v-model="form.phone" placeholder="登录手机号" />
+        <el-form-item label="账号" required>
+          <el-input v-model="form.phone" placeholder="登录账号（可填数字或文本）" />
         </el-form-item>
         <el-form-item label="姓名" required>
           <el-input v-model="form.name" placeholder="用户姓名" />

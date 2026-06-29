@@ -45,7 +45,7 @@ const handleLogin = async () => {
   if (!valid) return
   loading.value = true
   try {
-    const data = await userStore.login(form)
+    const data = await userStore.login({ ...form, source: 'web' })
     ElMessage.success('登录成功')
     if (data.must_change_pwd) {
       router.push('/change-password')
