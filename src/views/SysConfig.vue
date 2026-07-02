@@ -8,7 +8,7 @@
       <el-form label-width="160px" style="max-width: 600px">
         <el-divider content-position="left">基础设置</el-divider>
         <el-form-item label="系统名称">
-          <el-input v-model="config.system_name" placeholder="个人Rsms信息记录平台" />
+          <el-input v-model="config.system_name" placeholder="小斯的商用车客户跟踪后台" />
         </el-form-item>
         <el-form-item label="线索自动分配">
           <el-switch v-model="config.lead_auto_assign" />
@@ -48,7 +48,7 @@ const loading = ref(false)
 const saving = ref(false)
 
 const config = reactive({
-  system_name: '个人Rsms信息记录平台',
+  system_name: '小斯的商用车客户跟踪后台',
   lead_auto_assign: false,
   pool_recycle_days: 30,
   notify_new_lead: true,

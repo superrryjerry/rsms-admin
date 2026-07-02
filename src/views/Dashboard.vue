@@ -44,7 +44,7 @@
             <span>系统信息</span>
           </template>
           <el-descriptions :column="1" border>
-            <el-descriptions-item label="系统名称">个人Rsms信息记录平台</el-descriptions-item>
+            <el-descriptions-item label="系统名称">小斯的商用车客户跟踪后台</el-descriptions-item>
             <el-descriptions-item label="版本">v1.0.0</el-descriptions-item>
             <el-descriptions-item label="后端技术">Node.js + Express + SQLite</el-descriptions-item>
             <el-descriptions-item label="前端技术">Vue 3 + Element Plus</el-descriptions-item>

@@ -39,7 +39,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  document.title = (to.meta.title || '首页') + ' - 个人Rsms信息记录平台'
+  document.title = (to.meta.title || '首页') + ' - 小斯的商用车客户跟踪后台'
   const token = localStorage.getItem('rsms_token')
   const publicPaths = ['/login', '/change-password']
   if (!publicPaths.includes(to.path) && !token) {

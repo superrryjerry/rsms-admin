@@ -3,7 +3,7 @@
     <div class="login-card">
       <div class="login-header">
         <el-icon size="40" color="#409EFF"><Monitor /></el-icon>
-        <h2>个人Rsms信息记录平台</h2>
+        <h2>小斯的商用车客户跟踪后台</h2>
         <p>欢迎使用</p>
       </div>
       <el-form ref="formRef" :model="form" :rules="rules" @submit.prevent="handleLogin">

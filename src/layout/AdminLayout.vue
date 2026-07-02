@@ -3,7 +3,7 @@
     <el-aside :width="isCollapse ? '64px' : '220px'" class="aside">
       <div class="logo">
         <el-icon size="24"><Monitor /></el-icon>
-        <span v-show="!isCollapse">个人Rsms信息记录平台</span>
+        <span v-show="!isCollapse">小斯的商用车客户跟踪后台</span>
       </div>
       <el-menu
         :default-active="route.path"
