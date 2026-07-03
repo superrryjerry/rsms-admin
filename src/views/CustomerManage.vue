@@ -13,14 +13,8 @@
       </template>
 
       <el-table :data="list" v-loading="loading" border stripe>
-        <el-table-column prop="customer_name" label="客户名称" min-width="140" />
-        <el-table-column prop="tag" label="标签" width="100">
-          <template #default="{ row }">
-            <el-tag v-if="row.tag" :type="tagType(row.tag)" size="small">{{ tagLabel(row.tag) }}</el-tag>
-            <span v-else>-</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="city" label="所在市" width="100" />
+              <el-table-column prop="customer_name" label="客户名称" min-width="140" />
+              <el-table-column prop="city" label="所在市" width="100" />
         <el-table-column prop="registration_info" label="注册信息" min-width="200" show-overflow-tooltip />
         <el-table-column prop="sales_dealers_summary" label="销售经销商汇总" min-width="180" show-overflow-tooltip />
         <el-table-column prop="service_dealers_summary" label="服务经销商汇总" min-width="180" show-overflow-tooltip />
@@ -45,12 +39,8 @@
     <!-- 详情弹窗 -->
     <el-dialog v-model="detailDialog" title="客户详情" width="700px">
       <el-descriptions :column="2" border v-if="detailData">
-        <el-descriptions-item label="客户名称">{{ detailData.customer_name }}</el-descriptions-item>
-        <el-descriptions-item label="标签">
-          <el-tag v-if="detailData.tag" :type="tagType(detailData.tag)" size="small">{{ tagLabel(detailData.tag) }}</el-tag>
-          <span v-else>-</span>
-        </el-descriptions-item>
-        <el-descriptions-item label="所在市">{{ detailData.city || '-' }}</el-descriptions-item>
+              <el-descriptions-item label="客户名称">{{ detailData.customer_name }}</el-descriptions-item>
+              <el-descriptions-item label="所在市">{{ detailData.city || '-' }}</el-descriptions-item>
         <el-descriptions-item label="注册信息">{{ detailData.registration_info || '-' }}</el-descriptions-item>
         <el-descriptions-item label="销售经销商汇总" :span="2">{{ detailData.sales_dealers_summary || '-' }}</el-descriptions-item>
         <el-descriptions-item label="服务经销商汇总" :span="2">{{ detailData.service_dealers_summary || '-' }}</el-descriptions-item>
