@@ -58,10 +58,14 @@
           <template #title>销售活动</template>
         </el-menu-item>
         <el-menu-item index="/config">
-          <el-icon><Setting /></el-icon>
-          <template #title>系统配置</template>
-        </el-menu-item>
-        <el-menu-item index="/import">
+                  <el-icon><Setting /></el-icon>
+                  <template #title>系统配置</template>
+                </el-menu-item>
+                <el-menu-item index="/customer-tags">
+                  <el-icon><PriceTag /></el-icon>
+                  <template #title>客户标签管理</template>
+                </el-menu-item>
+                <el-menu-item index="/import">
           <el-icon><Upload /></el-icon>
           <template #title>数据导入</template>
         </el-menu-item>
