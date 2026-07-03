@@ -25,7 +25,6 @@
 
       <el-table :data="list" v-loading="loading" border stripe>
         <el-table-column prop="customer_name" label="客户名称" min-width="160" />
-        <el-table-column prop="dealer_code" label="经销商代码" width="120" />
         <el-table-column prop="tag" label="标签" width="100">
           <template #default="{ row }">
             <el-tag :type="tagType(row.tag)" size="small">{{ tagLabel(row.tag) }}</el-tag>
