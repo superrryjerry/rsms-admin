@@ -14,10 +14,9 @@
       <el-table :data="list" v-loading="loading" border stripe>
         <el-table-column prop="created_at" label="时间" width="160" />
         <el-table-column prop="user_name" label="销售人员" width="120" />
-        <el-table-column prop="vin" label="VIN" min-width="160" />
         <el-table-column prop="customer_name" label="客户名称" width="140" />
-        <el-table-column prop="activity_type" label="活动类型" width="120" />
-        <el-table-column prop="activity_content" label="活动内容" min-width="240" show-overflow-tooltip />
+        <el-table-column prop="visit_method" label="活动方式" width="120" />
+        <el-table-column prop="content" label="活动内容" min-width="240" show-overflow-tooltip />
       </el-table>
 
       <el-pagination
