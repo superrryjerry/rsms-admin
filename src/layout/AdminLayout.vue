@@ -69,6 +69,10 @@
           <el-icon><Upload /></el-icon>
           <template #title>数据导入</template>
         </el-menu-item>
+                <el-menu-item index="/login-logs">
+                  <el-icon><Notebook /></el-icon>
+                  <template #title>登录日志</template>
+                </el-menu-item>
       </el-menu>
     </el-aside>
 
