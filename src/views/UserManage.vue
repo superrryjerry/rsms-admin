@@ -14,7 +14,9 @@
         <el-table-column prop="dealer_code" label="经销商代码" width="120" />
         <el-table-column prop="role" label="角色" width="100">
           <template #default="{ row }">
-            <el-tag size="small">{{ row.role === 'admin' ? '管理员' : '经销商员工' }}</el-tag>
+            <el-tag :type="row.role === 'admin' ? 'danger' : row.role === 'admin_test' ? 'warning' : ''" size="small">
+              {{ row.role === 'admin' ? '超级管理员' : row.role === 'admin_test' ? 'Web管理员' : '经销商员工' }}
+            </el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="status" label="状态" width="80">
@@ -55,8 +57,9 @@
         </el-form-item>
         <el-form-item label="角色">
           <el-select v-model="form.role" style="width: 100%">
-            <el-option label="经销商员工" value="dealer" />
-            <el-option label="管理员" value="admin" />
+            <el-option label="经销商员工" value="dealer_staff" />
+            <el-option label="Web管理员" value="admin_test" />
+            <el-option label="超级管理员" value="admin" />
           </el-select>
         </el-form-item>
       </el-form>
@@ -79,7 +82,7 @@ const showDialog = ref(false)
 const submitting = ref(false)
 const isEdit = ref(false)
 const editId = ref(null)
-const form = reactive({ phone: '', name: '', password: '', dealer_code: '', role: 'dealer' })
+const form = reactive({ phone: '', name: '', password: '', dealer_code: '', role: 'dealer_staff' })
 
 const loadData = async () => {
   loading.value = true
@@ -92,7 +95,7 @@ const loadData = async () => {
 const openCreateDialog = () => {
   isEdit.value = false
   editId.value = null
-  Object.assign(form, { phone: '', name: '', password: '', dealer_code: '', role: 'dealer' })
+  Object.assign(form, { phone: '', name: '', password: '', dealer_code: '', role: 'dealer_staff' })
   showDialog.value = true
 }
 
@@ -129,7 +132,8 @@ const handleSubmit = async () => {
         phone: form.phone,
         name: form.name,
         password: form.password,
-        dealer_code: form.dealer_code || null
+        dealer_code: form.dealer_code || null,
+        role: form.role
       })
       ElMessage.success('创建成功')
     }
