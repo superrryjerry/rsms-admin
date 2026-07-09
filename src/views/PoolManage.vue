@@ -13,21 +13,26 @@
       </template>
 
       <el-table :data="list" v-loading="loading" border stripe>
-        <el-table-column prop="vin" label="VIN" min-width="160" />
-        <el-table-column prop="vin_full" label="VIN全称" min-width="180" />
-        <el-table-column prop="license_plate" label="车牌" width="100" />
-        <el-table-column prop="customer_name" label="客户名称" width="120" />
-        <el-table-column prop="vehicle_type" label="车辆类型" width="100" />
-        <el-table-column prop="sales_dealer" label="销售经销商" width="120" />
-        <el-table-column prop="model" label="车型" min-width="120" />
-        <el-table-column prop="delivery_date" label="交付日期" width="110" />
-        <el-table-column prop="production_date" label="生产日期" width="110" />
-        <el-table-column label="操作" width="100" fixed="right">
-          <template #default="{ row }">
-            <el-button type="primary" link @click="handleClaim(row)">认领</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+              <el-table-column prop="vin" label="VIN" min-width="160" />
+              <el-table-column prop="vin_full" label="VIN全称" min-width="180" />
+              <el-table-column prop="license_plate" label="车牌" width="100" />
+              <el-table-column prop="customer_name" label="客户名称" width="120" />
+              <el-table-column prop="vehicle_type" label="车辆类型" width="100" />
+              <el-table-column prop="sales_dealer" label="销售经销商" width="120" />
+              <el-table-column prop="model" label="车型" min-width="120" />
+              <el-table-column prop="delivery_date" label="交付日期" width="110" />
+              <el-table-column prop="production_date" label="生产日期" width="110" />
+              <el-table-column label="车龄" width="100">
+                <template #default="{ row }">
+                  {{ calcVehicleAge(row.production_date) }}
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="100" fixed="right">
+                <template #default="{ row }">
+                  <el-button type="primary" link @click="handleClaim(row)">认领</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
 
       <el-pagination
         style="margin-top: 16px; justify-content: flex-end"
@@ -112,6 +117,16 @@ const doClaim = async () => {
 const exportData = () => {
   const token = localStorage.getItem('token')
   window.open(`/api/pool/export?token=${token}`, '_blank')
+}
+
+// 计算车龄
+const calcVehicleAge = (productionDate) => {
+  if (!productionDate) return '-'
+  const prodDate = new Date(productionDate)
+  const now = new Date()
+  const years = Math.floor((now - prodDate) / (365.25 * 24 * 60 * 60 * 1000))
+  const months = Math.floor((now - prodDate) % (365.25 * 24 * 60 * 60 * 1000) / (30.44 * 24 * 60 * 60 * 1000))
+  return years > 0 ? `${years}年${months}个月` : `${months}个月`
 }
 
 onMounted(() => { loadData(); loadDealers() })
