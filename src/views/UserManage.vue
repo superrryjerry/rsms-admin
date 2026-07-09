@@ -143,18 +143,8 @@ const handleSubmit = async () => {
 }
 
 const handleReset = async (row) => {
-  // 第一步：输入旧密码
-  const { value: oldPwd } = await ElMessageBox.prompt('请先输入当前密码以验证身份', '重置密码 - 验证身份', {
-    confirmButtonText: '下一步',
-    cancelButtonText: '取消',
-    inputType: 'password',
-    inputPattern: /.+/,
-    inputErrorMessage: '请输入当前密码'
-  }).catch(() => ({ value: null }))
-  if (!oldPwd) return
-
-  // 第二步：输入新密码
-  const { value: newPwd } = await ElMessageBox.prompt(`请输入 ${row.name} 的新密码`, '重置密码 - 新密码', {
+  // 直接输入新密码（管理员重置不需要旧密码）
+  const { value: newPwd } = await ElMessageBox.prompt(`请输入 ${row.name} 的新密码`, '重置密码', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     inputType: 'password',
@@ -163,8 +153,8 @@ const handleReset = async (row) => {
   }).catch(() => ({ value: null }))
   if (!newPwd) return
 
-  await adminApi.resetPassword(row.id, { old_password: oldPwd, new_password: newPwd })
-  ElMessage.success('密码已重置')
+  await adminApi.resetPassword(row.id, { new_password: newPwd })
+  ElMessage.success('密码已重置，用户下次登录需修改密码')
 }
 
 const handleToggle = async (row) => {
