@@ -20,6 +20,9 @@
         </el-form-item>
       </el-form>
     </div>
+    <div class="login-footer">
+      <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">沪ICP备2026032337号-1</a>
+    </div>
   </div>
 </template>
 
@@ -86,5 +89,19 @@ const handleLogin = async () => {
 .login-header p {
   color: #909399;
   font-size: 14px;
+}
+.login-footer {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+.login-footer a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 12px;
+}
+.login-footer a:hover {
+  color: #fff;
 }
 </style>

@@ -104,6 +104,9 @@
       <el-main class="main">
         <router-view />
       </el-main>
+      <el-footer class="footer">
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">沪ICP备2026032337号-1</a>
+      </el-footer>
     </el-container>
   </el-container>
 </template>
@@ -179,5 +182,19 @@ const handleCommand = (cmd) => {
   background: #f0f2f5;
   padding: 20px;
   overflow-y: auto;
+}
+.footer {
+  text-align: center;
+  padding: 12px 0;
+  background: #f0f2f5;
+  color: #666;
+  font-size: 12px;
+}
+.footer a {
+  color: #666;
+  text-decoration: none;
+}
+.footer a:hover {
+  color: #409EFF;
 }
 </style>
