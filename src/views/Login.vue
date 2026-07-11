@@ -50,10 +50,11 @@ const handleLogin = async () => {
   try {
     const data = await userStore.login({ ...form, source: 'web' })
     // 检查是否是管理员角色（admin 或 admin_test）
+    // 安全设计：非管理员也显示统一错误提示，不泄露账号存在信息
     const role = data.user?.role
     if (role !== 'admin' && role !== 'admin_test') {
       userStore.logout()
-      ElMessage.error('此账号无后台管理权限，请使用管理员账号登录')
+      ElMessage.error('账号或密码错误')
       return
     }
     ElMessage.success('登录成功')
