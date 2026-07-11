@@ -49,6 +49,13 @@ const handleLogin = async () => {
   loading.value = true
   try {
     const data = await userStore.login({ ...form, source: 'web' })
+    // 检查是否是管理员角色（admin 或 admin_test）
+    const role = data.user?.role
+    if (role !== 'admin' && role !== 'admin_test') {
+      userStore.logout()
+      ElMessage.error('此账号无后台管理权限，请使用管理员账号登录')
+      return
+    }
     ElMessage.success('登录成功')
     if (data.must_change_pwd) {
       router.push('/change-password')

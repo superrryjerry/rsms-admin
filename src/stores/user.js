@@ -17,10 +17,10 @@ export const useUserStore = defineStore('user', {
     userInfo: safeParseUser()
   }),
   getters: {
-    isLoggedIn: (state) => !!state.token,
-    isAdmin: (state) => state.userInfo?.role === 'admin',
-    mustChangePwd: (state) => !!state.userInfo?.must_change_pwd
-  },
+      isLoggedIn: (state) => !!state.token,
+      isAdmin: (state) => state.userInfo?.role === 'admin' || state.userInfo?.role === 'admin_test',
+      mustChangePwd: (state) => !!state.userInfo?.must_change_pwd
+    },
   actions: {
     async login(form) {
       const res = await authApi.login(form)

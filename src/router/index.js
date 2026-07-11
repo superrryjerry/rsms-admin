@@ -40,15 +40,42 @@ const router = createRouter({
   routes
 })
 
+// 检查用户是否是管理员
+function isAdminUser() {
+  try {
+    const user = JSON.parse(localStorage.getItem('rsms_user') || '{}')
+    return user.role === 'admin' || user.role === 'admin_test'
+  } catch {
+    return false
+  }
+}
+
 router.beforeEach((to, from, next) => {
   document.title = (to.meta.title || '首页') + ' - 小斯的商用车客户跟踪后台'
   const token = localStorage.getItem('rsms_token')
   const publicPaths = ['/login', '/change-password']
-  if (!publicPaths.includes(to.path) && !token) {
-    next('/login')
-  } else {
+  
+  // 公开页面直接放行
+  if (publicPaths.includes(to.path)) {
     next()
+    return
   }
+  
+  // 未登录 -> 跳转登录页
+  if (!token) {
+    next('/login')
+    return
+  }
+  
+  // 已登录但不是管理员 -> 清除登录信息并跳转登录页
+  if (!isAdminUser()) {
+    localStorage.removeItem('rsms_token')
+    localStorage.removeItem('rsms_user')
+    next('/login')
+    return
+  }
+  
+  next()
 })
 
 export default router
