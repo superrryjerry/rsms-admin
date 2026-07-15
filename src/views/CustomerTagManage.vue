@@ -31,7 +31,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="city" label="所在市" width="100" />
-        <el-table-column prop="service_dealers_summary" label="服务经销商" min-width="200" show-overflow-tooltip />
+        <el-table-column prop="tag_dealer_name" label="打标签经销商" min-width="120" show-overflow-tooltip />
         <el-table-column prop="updated_at" label="更新时间" width="160" />
         <el-table-column label="操作" width="80" fixed="right">
           <template #default="{ row }">
