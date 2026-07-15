@@ -114,9 +114,9 @@ const fetchLogs = async () => {
     }
     
     const res = await request.get('/admin/login-logs', { params })
-    if (res.data.code === 0) {
-      logList.value = res.data.data.list
-      total.value = res.data.data.total
+    if (res.code === 0) {
+      logList.value = res.data.list
+      total.value = res.data.total
     }
   } catch (e) {
     console.error('获取登录日志失败:', e)
@@ -133,8 +133,8 @@ const fetchSummary = async () => {
     if (searchPhone.value) params.phone = searchPhone.value
     
     const res = await request.get('/admin/login-logs/summary', { params })
-    if (res.data.code === 0) {
-      summaryList.value = res.data.data
+    if (res.code === 0) {
+      summaryList.value = res.data
     }
   } catch (e) {
     console.error('获取登录汇总失败:', e)
