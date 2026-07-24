@@ -70,7 +70,8 @@ export const vehicleApi = {
   drop: (data) => http.post('/vehicles/drop', data),
   apply: (data) => http.post('/vehicles/apply', data),
   transfer: (data) => http.post('/vehicles/transfer', data),
-  myRequests: () => http.get('/vehicles/my-requests')
+  myRequests: () => http.get('/vehicles/my-requests'),
+  changeCustomer: (data) => http.post('/vehicles/change-customer', data)
 }
 
 // ===== Customers =====

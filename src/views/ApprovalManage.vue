@@ -25,6 +25,14 @@
         <el-table-column prop="request_user_name" label="申请人" width="120" />
         <el-table-column prop="current_dealer_name" label="当前经销商" width="150" />
         <el-table-column prop="vin" label="VIN" width="180" show-overflow-tooltip />
+        <el-table-column label="改名详情" width="220">
+          <template #default="{ row }">
+            <span v-if="row.request_type === 'change_customer'">
+              {{ row.old_customer_name }} → {{ row.new_customer_name }}
+            </span>
+            <span v-else>-</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="status" label="状态" width="100">
           <template #default="{ row }">
             <el-tag :type="statusTagType(row.status)">{{ statusMap[row.status] || row.status }}</el-tag>
@@ -81,7 +89,7 @@ const page = ref(1)
 const pageSize = ref(20)
 const statusFilter = ref('')
 
-const typeMap = { vehicle_apply: '车辆申请', vehicle_transfer: '车辆转移', vehicle_drop: '车辆退回' }
+const typeMap = { vehicle_apply: '车辆申请', vehicle_transfer: '车辆转移', vehicle_drop: '车辆退回', claim: '车辆认领', transfer: '经销商转移', change_customer: '客户改名' }
 const statusMap = { pending: '待审批', approved: '已通过', rejected: '已驳回' }
 const statusTagType = (s) => ({ pending: 'warning', approved: 'success', rejected: 'danger' }[s] || 'info')
 
